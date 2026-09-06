@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر المنتجات الطبيعية والعناية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Cairo', sans-serif; } </style>
+</head>
+<body class="bg-emerald-50/30 text-gray-800">
+
+    <!-- الهيدر -->
+    <nav class="bg-emerald-800 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">🌿 متجر الطبيعة والجمال</h1>
+            <a href="/admin/" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-4 py-2 rounded-lg transition">
+                لوحة التحكم
+            </a>
+        </div>
+    </nav>
+
+    <!-- رسالة نجاح الطلب -->
+    {% if messages %}
+    <div class="max-w-4xl mx-auto my-4 px-4">
+        {% for message in messages %}
+        <div class="bg-emerald-100 border border-emerald-400 text-emerald-800 px-4 py-3 rounded-xl text-center font-bold">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- القسم الترحيبي -->
+    <header class="bg-emerald-100 py-12 border-b border-emerald-200">
+        <div class="max-w-4xl mx-auto text-center px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-emerald-900 mb-3">منتجات طبيعية 100% لبشرتك وصحتك</h2>
+            <p class="text-emerald-700 text-lg">اكتشفي تشكيلتنا المختارة من الزيوت الطبيعية والمستحضرات العشبية</p>
+        </div>
+    </header>
+
+    <!-- قائمة المنتجات -->
+    <main class="max-w-7xl mx-auto px-4 py-10">
+        <h3 class="text-2xl font-bold text-gray-800 mb-6 border-r-4 border-emerald-600 pr-3">منتجاتنا المتميزة</h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for product in products %}
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition border border-emerald-100 overflow-hidden flex flex-col justify-between">
+                <div>
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="w-full h-52 object-cover">
+                    {% else %}
+                    <div class="w-full h-52 bg-emerald-100 flex items-center justify-center text-emerald-500">لا توجد صورة</div>
+                    {% endif %}
+
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-xs mb-2">
+                            <span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-semibold">
+                                {{ product.category.name }}
+                            </span>
+                            <span class="text-gray-500">
+                                {{ product.get_skin_type_display }}
+                            </span>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-2">{{ product.title }}</h4>
+                        <p class="text-gray-600 text-sm line-clamp-2 mb-4">{{ product.description }}</p>
+                    </div>
+                </div>
+
+                <div class="p-4 pt-0 border-t border-gray-50 mt-2 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-gray-400 block">السعر</span>
+                        <span class="text-xl font-bold text-emerald-700">{{ product.price }} دج</span>
+                    </div>
+                    <button onclick="openOrderModal('{{ product.id }}', '{{ product.title }}', '{{ product.price }}')"
+                            class="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">
+                        طلب الآن
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-12 text-gray-500">لا توجد منتجات معروضة حالياً.</div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- نافذة نموذج الطلب (Modal) -->
+    <div id="orderModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeOrderModal()" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+            <h3 class="text-xl font-bold text-emerald-900 mb-1">تأكيد الطلب السريع</h3>
+            <p id="modalProductTitle" class="text-sm text-emerald-700 font-semibold mb-4"></p>
+
+            <form action="{% url 'create-order' %}" method="POST" class="space-y-4">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" id="modalProductId">
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">الاسم الكامل</label>
+                    <input type="text" name="full_name" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">رقم الهاتف</label>
+                    <input type="tel" name="phone" required placeholder="06XXXXXXXX" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">الولاية والعنوان الكامل</label>
+                    <input type="text" name="address" required placeholder="مثال: الجزائر - باب الزوار" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">الكمية</label>
+                    <input type="number" name="quantity" value="1" min="1" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-emerald-700/20">
+                    إرسال الطلب الآن
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openOrderModal(id, title, price) {
+            document.getElementById('modalProductId').value = id;
+            document.getElementById('modalProductTitle').innerText = title + ' - ' + price + ' دج';
+            document.getElementById('orderModal').classList.remove('hidden');
+            document.getElementById('orderModal').classList.add('flex');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.add('hidden');
+            document.getElementById('orderModal').classList.remove('flex');
+        }
+    </script>
+</body>
+</html>
