@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+<a href="{% url 'about' %}" class="text-white hover:text-emerald-200 font-medium text-sm transition">
+    عن المتجر
+</a>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +16,7 @@
     <!-- الهيدر -->
     <nav class="bg-emerald-800 text-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold">🌿 متجر الطبيعة والجمال</h1>
+            <h1 class="text-2xl font-bold">متجر نقاء 🌿</h1>
             <a href="/admin/" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-4 py-2 rounded-lg transition">
                 لوحة التحكم
             </a>
@@ -34,8 +37,8 @@
     <!-- القسم الترحيبي -->
     <header class="bg-emerald-100 py-12 border-b border-emerald-200">
         <div class="max-w-4xl mx-auto text-center px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-emerald-900 mb-3">منتجات طبيعية 100% لبشرتك وصحتك</h2>
-            <p class="text-emerald-700 text-lg">اكتشفي تشكيلتنا المختارة من الزيوت الطبيعية والمستحضرات العشبية</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-emerald-900 mb-3">منتجات وأعشاب طبيعية</h2>
+            <p class="text-emerald-700 text-lg">اكتشفوا منتجاتنا المتوفرة</p>
         </div>
     </header>
 
@@ -58,9 +61,7 @@
                             <span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-semibold">
                                 {{ product.category.name }}
                             </span>
-                            <span class="text-gray-500">
-                                {{ product.get_skin_type_display }}
-                            </span>
+
                         </div>
                         <h4 class="text-lg font-bold text-gray-900 mb-2">{{ product.title }}</h4>
                         <p class="text-gray-600 text-sm line-clamp-2 mb-4">{{ product.description }}</p>
@@ -135,5 +136,18 @@
             document.getElementById('orderModal').classList.remove('flex');
         }
     </script>
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/07733758541?text=مرحباً،%20أود%20الاستفسار%20عن%20منتجات%20متجر%20عبد%20المجيد"
+   target="_blank"
+   class="fixed bottom-6 left-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 flex items-center justify-center z-50 group"
+   title="تواصل معنا عبر الواتساب">
+    <!-- WhatsApp Icon -->
+    <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
+        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+    </svg>
+    <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 ease-in-out mr-0 group-hover:mr-2 text-sm font-semibold">
+        تواصل معنا
+    </span>
+</a>
 </body>
 </html>

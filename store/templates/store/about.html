@@ -1,0 +1,43 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-12 px-4">
+    <!-- عنوان الصفحة -->
+    <div class="text-center mb-10">
+        <h1 class="text-3xl font-extrabold text-emerald-900 mb-2">عن متجر عبد المجيد</h1>
+        <p class="text-emerald-600 font-medium">جودة طبيعية لمستحضرات الأعشاب والزيوت</p>
+    </div>
+
+    <!-- محتوى الصفحة -->
+    <div class="bg-white rounded-2xl p-8 shadow-sm border border-emerald-100 space-y-6 text-gray-700 leading-relaxed text-right">
+        <h2 class="text-xl font-bold text-emerald-800">من نحن؟</h2>
+        <p>
+            مرحباً بكم في **متجر عبد المجيد**، وجهتكم الأولى للحصول على أفضل المستحضرات الطبيعية والأعشاب المجهزة بعناية فائقة لتلبي احتياجاتكم اليومية.
+        </p>
+
+        <h2 class="text-xl font-bold text-emerald-800">رؤيتنا وزيوتنا الطبيعية</h2>
+        <p>
+            نؤمن بأن الطبيعة هي المصدر الأول للصحة والجمال، ولهذا نحرص على اختيار أجود أنواع الأعشاب والزيوت الطبيعية 100% الخالية من أي مواد كيميائية ضارة.
+        </p>
+
+        <!-- الميزات -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+            <div class="bg-emerald-50 p-4 rounded-xl text-center border border-emerald-200">
+                <div class="text-2xl mb-1">🌿</div>
+                <h3 class="font-bold text-emerald-900">منتجات طبيعية</h3>
+                <p class="text-xs text-gray-600 mt-1">مكونات أصيلة ومختارة بعناية</p>
+            </div>
+            <div class="bg-emerald-50 p-4 rounded-xl text-center border border-emerald-200">
+                <div class="text-2xl mb-1">🚚</div>
+                <h3 class="font-bold text-emerald-900">توصيل سريع</h3>
+                <p class="text-xs text-gray-600 mt-1">خدمة توصيل لكل الولايات</p>
+            </div>
+            <div class="bg-emerald-50 p-4 rounded-xl text-center border border-emerald-200">
+                <div class="text-2xl mb-1">🤝</div>
+                <h3 class="font-bold text-emerald-900">ثقة ورعاية</h3>
+                <p class="text-xs text-gray-600 mt-1">دعم متواصل لاستفساراتكم</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

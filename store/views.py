@@ -45,3 +45,5 @@ def create_order(request):
         messages.success(request, f'شكراً لك يا {full_name}! تم إرسال طلبك بنجاح وسنتصل بك قريباً للتأكيد.')
         return redirect('home')
 
+def about(request):
+    return render(request, 'store/about.html')
